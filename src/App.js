@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import './Components/Navbar'
 import Navbar from "./Components/Navbar";
 import Users from "./Components/Users"
-import dotenv from 'dotenv'
+import Search from "./Components/Search";
 import GitHubInstance from "./Repository/AxiosInstanceTemplate/GithubApiInstance";
 
 
@@ -29,6 +29,7 @@ class App extends Component {
         return (
             <div className="App">
                 <h1><Navbar/></h1>
+                <div><Search/></div>
                 <div className={"container"}>
                     <Users loading={this.state.loading} users={this.state.users}/>
                 </div>
