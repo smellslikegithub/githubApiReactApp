@@ -1,5 +1,5 @@
 import './App.css';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import './Components/Navbar'
 import Navbar from "./Components/Navbar";
 import Users from "./Components/Users"
@@ -15,11 +15,10 @@ class App extends Component {
     }
 
     async componentDidMount() {
-        dotenv.config();
         this.setState({loading: true});
         let allUsers = await GitHubInstance.get().then(({data}) => data);
 
-        if(allUsers.length){
+        if (allUsers.length) {
             this.setState({users: allUsers, loading: false});
             console.log("Worked");
         }
