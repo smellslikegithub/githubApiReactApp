@@ -14,13 +14,19 @@ export class Search extends Component {
     searchBarOnSubmit = (param) => {
         param.preventDefault();
         this.props.searchUser(this.state.text);
+        this.setState({reset: true});
         console.log(this.state.text);
     }
     pressedReset = (param) =>{
         param.preventDefault();
-        this.setState({reset: true});
-        this.props.resetSearchResults();
-        this.setState({reset: false});
+        if(this.state.reset === true){
+            this.props.resetSearchResults();
+            this.setState({reset: false});
+        }
+        else{
+            alert("Nothing To Reset!");
+        }
+
     }
 
     render() {
