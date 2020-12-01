@@ -3,7 +3,7 @@ import React, {Component} from "react";
 export class Search extends Component {
 
     state = {
-        text: 'Type a user name to begin search....',
+        text: "",
         reset: false,
     };
 
@@ -13,9 +13,14 @@ export class Search extends Component {
 
     searchBarOnSubmit = (param) => {
         param.preventDefault();
-        this.props.searchUser(this.state.text);
-        this.setState({reset: true});
-        console.log(this.state.text);
+        if(this.state.text === ""){
+            this.props.setAlert({flag: true, type: "light", msg: "Search Field Cannot Be Empty!"});
+        }
+        else {
+            this.props.searchUser(this.state.text);
+            this.setState({reset: true});
+            console.log(this.state.text);
+        }
     }
     pressedReset = (param) =>{
         param.preventDefault();
@@ -33,7 +38,7 @@ export class Search extends Component {
         return (
             <div>
                 <form className={"form"} onSubmit={this.searchBarOnSubmit}>
-                    <input type={"text"} name={"text"} onChange={this.searchBarOnChange} placeholder={this.state.text}/>
+                    <input type={"text"} name={"text"} onChange={this.searchBarOnChange} placeholder={"Type a user name to begin search...."}/>
                     <div id={"searchButtons"} style={searchButtonsContainer}>
                         <button className={"btn btn-primary searchButton"}>Submit!</button>
                         <button onClick={this.pressedReset} className={"btn btn-dark searchButton "}>Reset!</button>
@@ -51,5 +56,7 @@ const searchButtonsContainer = {
     float:"left",
 
 };
+
+
 
 export default Search;
