@@ -1,11 +1,18 @@
 import './App.css';
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import './Components/Navbar'
 import Navbar from "./Components/Navbar";
 import Users from "./Components/Users"
 import Alert from "./Components/Alert";
 import Search from "./Components/Search";
+import About from "./Components/Pages/About";
 import GithubApiInstance from "./Repository/AxiosInstanceTemplate/GithubApiInstance";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 
 class App extends Component {
@@ -57,7 +64,7 @@ class App extends Component {
 
             }
         })
-        setTimeout(()=>{
+        setTimeout(() => {
             this.setState({
                 alert: {
 
@@ -66,22 +73,39 @@ class App extends Component {
                     msg: ""
                 }
             })
-        },3000)
+        }, 3000)
     }
 
     render() {
         return (
-            <div className="App">
-                <h1><Navbar/></h1>
-                <Alert toggleAlert={this.state.alert}/>
-                <Search searchUser={this.searchUser} resetSearchResults={this.resetSearchResults}
-                        setAlert={this.setAlert}/>
-                <div className={"container"}>
-                    <Users loading={this.state.loading} users={this.state.users}/>
+            <Router>
+                <div className="App">
+                    <h1><Navbar/></h1>
+                    <Alert toggleAlert={this.state.alert}/>
+                    <Switch>
+                        <Route exact path={"/"} render={props => (
+                            <Fragment>
+                                <Search searchUser={this.searchUser} resetSearchResults={this.resetSearchResults}
+                                        setAlert={this.setAlert}/>
+                                <div className={"container"}>
+                                    <Users loading={this.state.loading} users={this.state.users}/>
+                                </div>
+                            </Fragment>
+                        )}/>
+
+                        <Route exact path={"/about"} render={props=>(
+                            <About/>
+                        )}/>
+
+                    </Switch>
+
                 </div>
-            </div>
+            </Router>
         );
     }
 }
 
 export default App;
+
+// Basic Fundamentals for React Router Dom
+// Inside the Router tag, place Switch and inside the Switch, place Route
