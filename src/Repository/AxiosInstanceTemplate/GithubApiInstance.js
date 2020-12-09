@@ -26,6 +26,19 @@ class GithubApiInstance {
 
         return getUser;
     }
+
+    getUser(loginUserName){
+        console.log("Inseide getUser()" + " " + loginUserName);
+        const getUser = axios.create({
+            baseURL: `https://api.github.com/users/${loginUserName}?q=&
+            client_id=${process.env.REACT_APP_CLIENT_ID}&
+            client_secret=${process.env.REACT_APP_CLIENT_SECRET}`,
+            method: "get",
+            responseType: "json"
+        });
+
+        return  getUser;
+    }
 }
 
 export default GithubApiInstance;
