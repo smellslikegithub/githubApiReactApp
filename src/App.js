@@ -13,12 +13,14 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import User from "./Components/User";
 
 
 class App extends Component {
     //const githubApiInstance = new GithubApiInstance();
     state = {
         users: [],
+        user: {},
         loading: false,
         githubApiInstance: new GithubApiInstance(),
         alert: {
@@ -51,6 +53,15 @@ class App extends Component {
 
     resetSearchResults = () => {
         this.defaultSearchResults();
+    }
+
+    getUser = async (userLoginName) => {
+        this.setState({loading: true});
+        let user = await this.state.githubApiInstance.getUser(userLoginName).get().then(({data}) => data);
+        //console.log(user);
+        this.setState({user: user});
+        this.setState({loading: false});
+
     }
 
     setAlert = (param) => {
@@ -93,9 +104,13 @@ class App extends Component {
                             </Fragment>
                         )}/>
 
-                        <Route exact path={"/about"} render={props=>(
+                        <Route exact path={"/about"} render={(props)=>(
                             <About/>
                         )}/>
+
+                        <Route  exact path={"/user/:loginId"} render={props=>(
+                            <User  {...props} getUser={this.getUser} user={this.state.user}/>
+                            )}/>
 
                     </Switch>
 

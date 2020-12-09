@@ -1,7 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import About from "../Components/Pages/About";
 
-const UserItem = ({user: {login, avatar_url, html_url}}) => { // Destructured Prop that is being sent from UserItem
+const UserItem = ({user: {login, avatar_url, html_url}}) => { // Destructured Prop that is being sent from Users
     return (
         <div className={"card text-center"}>
             <img
@@ -11,7 +18,7 @@ const UserItem = ({user: {login, avatar_url, html_url}}) => { // Destructured Pr
                 style={{width: '60px'}}
             />
             <div>
-                <a href={html_url} className={"btn btn-dark btn-sm my-1"}> More..</a>
+                <Link to={`/user/${login}`} className={"btn btn-dark btn-sm my-1"}> More..</Link>
             </div>
         </div>
     );
